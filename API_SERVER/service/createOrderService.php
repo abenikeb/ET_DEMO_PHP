@@ -39,11 +39,11 @@ class CreateOrderService{
         echo "createOrderResult";
         print_r($createOrderResult);
 
-         echo "JSON_DECODE";
-        print_r(json_decode($createOrderResult));
-    
+        
         $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
         
+        echo "JSON_DECODE";
+        print_r(json_decode($createOrderResult));
         // // var_dump($prepayId);
         
         $rawRequest = $this->createRawRequest($prepayId);
@@ -95,7 +95,7 @@ class CreateOrderService{
     
     }
 
-    function createMerchantOrderId() {
+    function createMerchantOrderId_() {
         return (string)time();
     }
        
@@ -114,7 +114,7 @@ class CreateOrderService{
         //               'trade_type' => 'InApp',
         //               'appid' => $this->merchantAppId,
         //               'merch_code' => $this->merchantCode,
-        //               'merch_order_id' => $this->createMerchantOrderId(),
+        //               'merch_order_id' => $this->createMerchantOrderId_(),
         //               'title' => $title,
         //               'total_amount' => $amount,
         //               'trans_currency' => 'USD',
@@ -139,7 +139,7 @@ class CreateOrderService{
                       'trade_type' => 'InApp',
                       'appid' => '930231098009602',
                       'merch_code' => '101011',
-                      'merch_order_id' => '1672575010',
+                      'merch_order_id' => '1472575010',
                       'title' => $title,
                       'total_amount' => $amount,
                       'trans_currency' => "ETB",
@@ -152,7 +152,8 @@ class CreateOrderService{
     
         $req['biz_content'] = $biz;
         // $req['sign'] = applySHA256Encription($req);
-        $req['sign'] = 'jZtOOiNWEISPHDLcAtjAkWFnXLMQRntdakSfuzAnJxzb/rtvoB+WlAvwfWSJ1Y++MFFsj7BCgVz4ZGRdB8V3KLeJReo5fpCiX1gAWnftM6GfFuts17/G0poOvxy78YC39b2rIFOOIBjaiEwkuC05nxk8sHjtfhA12I8RjZfC/myj1OcVJ6l5LY8XMYCBNIQ80nqhjS3O7e3UlU/Jd9ehL5DvyBD+BXbi70UN5jVoPiv19591m7I0GGq6wEDzvPrS6+qPqqGTQa08kLfotgnrqgZd5ixg0g1HSisev4a6RdQzYwcjN+t/TkKAWmWBE3flLLtBtNvrnzkKaGO5eM9CiQ==';
+        // adding sample test sign string
+        $req['sign'] = 'ULnJapyUqP2fFH7qYUKoViG3ML3R1zEMV+LbNmZuYYkN58ZHGuGlTuFoCEGgrIXxU5HZg4WdFGrlFuDy2wnuio3ve1hz68J+9NW1XQGObJpntVRib9yJjmXjd3Tk3IgCesp00lukTSmYqmV+AOtlsl9Epy4Ft6SG1aM0nzCBwz5/MuApeMEhsPvFlrtOWTJjNiRFSEKaNA/NNoBV7ER9dHSkl4HNXUJ3Xrv1uXMdtOi9/LGqlxrH0qKNbwZ+kx1MJl/1QsgO/gTAwCIYG097zS+y3tEtXZ8o8E1PSb7wNZc/vZl+2HpcUM+hxQUUGIrXBA9AQ/jF9Wavw1SNDrRQnQ==';
         $req['sign_type'] = 'SHA256WithRSA';
 
         print_r(json_encode($req));
