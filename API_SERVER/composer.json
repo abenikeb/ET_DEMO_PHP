@@ -1,0 +1,6 @@
+{
+  "require": {
+    "phpunit/php-timer": "^5.0",
+    "phpseclib/phpseclib": "~3.0"
+  }
+}
