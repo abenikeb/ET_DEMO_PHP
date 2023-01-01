@@ -12,7 +12,6 @@
   $ROUTE = $_SERVER['REQUEST_URI'];
   $REQUEST_PARAMS = json_decode(file_get_contents('php://input'));
 
-  print_r();
   $createOrderService = new CreateOrderService(
                       $baseUrl=$ENV_Variables['baseUrl'], 
                       $req=$REQUEST_PARAMS, 

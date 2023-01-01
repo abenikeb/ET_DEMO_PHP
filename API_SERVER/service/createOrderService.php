@@ -38,8 +38,11 @@ class CreateOrderService{
 
         echo "createOrderResult";
         print_r($createOrderResult);
+
+         echo "JSON_DECODE";
+        print_r(json_decode($createOrderResult));
     
-        // $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
+        $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
         
         // // var_dump($prepayId);
         
@@ -139,7 +142,7 @@ class CreateOrderService{
                       'merch_order_id' => '1672575010',
                       'title' => $title,
                       'total_amount' => $amount,
-                      'trans_currency' => "USD",
+                      'trans_currency' => "ETB",
                       'timeout_express' => '120m',
                       'payee_identifier' => '220311',
                       'payee_identifier_type'=> '04',
@@ -149,7 +152,7 @@ class CreateOrderService{
     
         $req['biz_content'] = $biz;
         // $req['sign'] = applySHA256Encription($req);
-        $req['sign'] = 'T76BIjFTaRuFQDaoNTB4naIywllsn5rzn/RPulYFI6E3EgwtzMeR17xIbUPMaUJwULtVZ4zLtwXDjfnSMAgYKEZt7bOJf+asqCGQqyVvnSWlqiJMOWaux2XcHqNTeZvbRkpJlDuVFbTKBLxFzsBOTAShcqfOK5x45jVx5NMVPkNSWEqO6lfxRcpQZCobwUjLv/J4KikUX0L82KLxB1+5i9hqRpCI4Ay8e7Y719oIcyUG7ow0jkV5eDx3vVLGoy4iUZf0HkZD71jbFgaoNZomcOHafAqpbpBUQIhjRW0sMGH2OrykJZH3k66m2OJKPWHgNm1v59RIwGT750XhAHIlOw==';
+        $req['sign'] = 'jZtOOiNWEISPHDLcAtjAkWFnXLMQRntdakSfuzAnJxzb/rtvoB+WlAvwfWSJ1Y++MFFsj7BCgVz4ZGRdB8V3KLeJReo5fpCiX1gAWnftM6GfFuts17/G0poOvxy78YC39b2rIFOOIBjaiEwkuC05nxk8sHjtfhA12I8RjZfC/myj1OcVJ6l5LY8XMYCBNIQ80nqhjS3O7e3UlU/Jd9ehL5DvyBD+BXbi70UN5jVoPiv19591m7I0GGq6wEDzvPrS6+qPqqGTQa08kLfotgnrqgZd5ixg0g1HSisev4a6RdQzYwcjN+t/TkKAWmWBE3flLLtBtNvrnzkKaGO5eM9CiQ==';
         $req['sign_type'] = 'SHA256WithRSA';
 
         print_r(json_encode($req));
