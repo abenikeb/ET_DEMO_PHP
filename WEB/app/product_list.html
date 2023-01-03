@@ -58,8 +58,10 @@
         window
           .fetch(baseUrl + "/create/order", {
             method: "post",
+            mode:"no-cors",
             headers: {
               "Content-Type": "application/json",
+              
             },
             body: JSON.stringify({
               title: "diamond_" + price,
