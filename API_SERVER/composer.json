@@ -1,6 +1,9 @@
 {
   "require": {
     "phpunit/php-timer": "^5.0",
-    "phpseclib/phpseclib": "~3.0"
+    "phpseclib/phpseclib": "~3.0",
+    "spatie/crypto": "^2.0",
+    "php": "^7.4|^8.0",
+    "ext-openssl": "*"
   }
 }

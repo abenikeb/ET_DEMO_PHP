@@ -40,13 +40,13 @@ class CreateOrderService{
         print_r($createOrderResult);
 
         
-        $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
+        // $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
         
-        echo "JSON_DECODE";
-        print_r(json_decode($createOrderResult));
-        // // var_dump($prepayId);
+        // echo "JSON_DECODE";
+        // print_r(json_decode($createOrderResult));
+        // // // var_dump($prepayId);
         
-        $rawRequest = $this->createRawRequest($prepayId);
+        // $rawRequest = $this->createRawRequest($prepayId);
 
         
         
@@ -101,8 +101,8 @@ class CreateOrderService{
        
     function createRequestObject($title, $amount) {
         // $req = array(
-        //         // 'nonce_str' => createNonceStr(),
-        //         'nonce_str' => 'A2Y0OMG8E9H8TM5F45WR1V8VY78G6O5U',
+        //        'nonce_str' => createNonceStr(),
+        //         'nonce_str' => 'A2Y0OMG8E1H8TM5F45WR1V8VY78G6O5U',
         //         'method' => 'payment.preorder',
         //         'timestamp' => createTimeStamp(), 
         //         'version' => '1.0',
@@ -117,12 +117,12 @@ class CreateOrderService{
         //               'merch_order_id' => $this->createMerchantOrderId_(),
         //               'title' => $title,
         //               'total_amount' => $amount,
-        //               'trans_currency' => 'USD',
+        //               'trans_currency' => 'ETB',
         //               'timeout_express' => '120m',
         //               'payee_identifier' => '220311',
         //               'payee_identifier_type'=> '04',
         //               'payee_type' => '5000',
-        //             //   'redirect_url' => 'https://www.bing.com'
+        //               'redirect_url' => 'https://www.bing.com'
         //             );
 
         $req = array(
@@ -139,7 +139,7 @@ class CreateOrderService{
                       'trade_type' => 'InApp',
                       'appid' => '930231098009602',
                       'merch_code' => '101011',
-                      'merch_order_id' => '1472575010',
+                      'merch_order_id' => '1742575010',
                       'title' => $title,
                       'total_amount' => $amount,
                       'trans_currency' => "ETB",
@@ -147,13 +147,13 @@ class CreateOrderService{
                       'payee_identifier' => '220311',
                       'payee_identifier_type'=> '04',
                       'payee_type' => '5000',
-                    //   'redirect_url' => 'https://www.bing.com'
+                      'redirect_url' => 'https://www.bing.com'
                     );
     
         $req['biz_content'] = $biz;
-        // $req['sign'] = applySHA256Encription($req);
+        $req['sign'] = applySHA256Encription($req);
         // adding sample test sign string
-        $req['sign'] = 'ULnJapyUqP2fFH7qYUKoViG3ML3R1zEMV+LbNmZuYYkN58ZHGuGlTuFoCEGgrIXxU5HZg4WdFGrlFuDy2wnuio3ve1hz68J+9NW1XQGObJpntVRib9yJjmXjd3Tk3IgCesp00lukTSmYqmV+AOtlsl9Epy4Ft6SG1aM0nzCBwz5/MuApeMEhsPvFlrtOWTJjNiRFSEKaNA/NNoBV7ER9dHSkl4HNXUJ3Xrv1uXMdtOi9/LGqlxrH0qKNbwZ+kx1MJl/1QsgO/gTAwCIYG097zS+y3tEtXZ8o8E1PSb7wNZc/vZl+2HpcUM+hxQUUGIrXBA9AQ/jF9Wavw1SNDrRQnQ==';
+        //$req['sign'] = 'GD5dTTpySmnyAQcWY0eiZ34fzQCGZpFTjYHCMBEI7QwrgJB4YKOkYJrKQz4YGQXuSLqkPknmKOd/iQy6JVZwPGAZ9/TU1cD+BEciz+lRLF2mWOL+Jzdv6h4a7yoJ4FnwXaJqwg0UzgsKjm68ZxjMI+jQnMJrauM6lWKJpAVJo5RmWPGndc6I9BmGL7UgfID2ourWNXgFO+wWuhwWrTHVYnJV8kp+RZdHBXEekiqjTow8OhRHQ40L5NlPMtg211tNPeeGxA4VsKYm3BzkldV/UTlL7MbDM9x5Rp7Ukl8FSA5owwawEMf0vMhZIBViTptZlZVkP9kjf4goZ/IszRXxKQ==';
         $req['sign_type'] = 'SHA256WithRSA';
 
         print_r(json_encode($req));
