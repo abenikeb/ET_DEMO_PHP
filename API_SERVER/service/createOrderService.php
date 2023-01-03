@@ -40,17 +40,17 @@ class CreateOrderService{
         print_r($createOrderResult);
 
         
-        // $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
+        $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
         
-        // echo "JSON_DECODE";
-        // print_r(json_decode($createOrderResult));
-        // // // var_dump($prepayId);
+        echo "JSON_DECODE";
+        print_r(json_decode($createOrderResult));
+        // // var_dump($prepayId);
         
         // $rawRequest = $this->createRawRequest($prepayId);
 
         
         
-        echo $rawRequest;
+        // echo $rawRequest;
 
         // if($rawRequest) {
         //     $response = [ 'rawRequest' => $rawRequest];
@@ -100,36 +100,11 @@ class CreateOrderService{
     }
        
     function createRequestObject($title, $amount) {
-        // $req = array(
-        //        'nonce_str' => createNonceStr(),
-        //         'nonce_str' => 'A2Y0OMG8E1H8TM5F45WR1V8VY78G6O5U',
-        //         'method' => 'payment.preorder',
-        //         'timestamp' => createTimeStamp(), 
-        //         'version' => '1.0',
-        //         'biz_content' => [],
-        //         );
-    
-        // $biz = array( 'notify_url' => 'https://www.google.com',
-        //               'business_type' => 'BuyGoods', 
-        //               'trade_type' => 'InApp',
-        //               'appid' => $this->merchantAppId,
-        //               'merch_code' => $this->merchantCode,
-        //               'merch_order_id' => $this->createMerchantOrderId_(),
-        //               'title' => $title,
-        //               'total_amount' => $amount,
-        //               'trans_currency' => 'ETB',
-        //               'timeout_express' => '120m',
-        //               'payee_identifier' => '220311',
-        //               'payee_identifier_type'=> '04',
-        //               'payee_type' => '5000',
-        //               'redirect_url' => 'https://www.bing.com'
-        //             );
-
         $req = array(
-                // 'nonce_str' => createNonceStr(),
-                'nonce_str' => 'A2Y0OMG8E9H8TM5F45WR1V8VY78G6O5U',
+               'nonce_str' => createNonceStr(),
+                'nonce_str' => 'A2Y0OMG8E1H8TM5F45WR1V8VY78G6O5U',
                 'method' => 'payment.preorder',
-                'timestamp' => "1672575010", 
+                'timestamp' => createTimeStamp(), 
                 'version' => '1.0',
                 'biz_content' => [],
                 );
@@ -137,18 +112,43 @@ class CreateOrderService{
         $biz = array( 'notify_url' => 'https://www.google.com',
                       'business_type' => 'BuyGoods', 
                       'trade_type' => 'InApp',
-                      'appid' => '930231098009602',
-                      'merch_code' => '101011',
-                      'merch_order_id' => '1742575010',
+                      'appid' => $this->merchantAppId,
+                      'merch_code' => $this->merchantCode,
+                      'merch_order_id' => $this->createMerchantOrderId_(),
                       'title' => $title,
                       'total_amount' => $amount,
-                      'trans_currency' => "ETB",
+                      'trans_currency' => 'ETB',
                       'timeout_express' => '120m',
                       'payee_identifier' => '220311',
                       'payee_identifier_type'=> '04',
                       'payee_type' => '5000',
                       'redirect_url' => 'https://www.bing.com'
                     );
+
+        // $req = array(
+        //         // 'nonce_str' => createNonceStr(),
+        //         'nonce_str' => 'A2Y0OMG8E9H8TM5F45WR1V8VY78G6O5U',
+        //         'method' => 'payment.preorder',
+        //         'timestamp' => "1672575010", 
+        //         'version' => '1.0',
+        //         'biz_content' => [],
+        //         );
+    
+        // $biz = array( 'notify_url' => 'https://www.google.com',
+        //               'business_type' => 'BuyGoods', 
+        //               'trade_type' => 'InApp',
+        //               'appid' => '930231098009602',
+        //               'merch_code' => '101011',
+        //               'merch_order_id' => '1742575010',
+        //               'title' => $title,
+        //               'total_amount' => $amount,
+        //               'trans_currency' => "ETB",
+        //               'timeout_express' => '120m',
+        //               'payee_identifier' => '220311',
+        //               'payee_identifier_type'=> '04',
+        //               'payee_type' => '5000',
+        //               'redirect_url' => 'https://www.bing.com'
+        //             );
     
         $req['biz_content'] = $biz;
         $req['sign'] = applySHA256Encription($req);
