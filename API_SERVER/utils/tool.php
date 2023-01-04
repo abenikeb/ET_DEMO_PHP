@@ -11,12 +11,6 @@ function applySHA256Encription($req){
     return sign($req, $app_key);
 }
 
-/**
-* @Purpose: Extract the attributes to be signed into a map
-*
-* @Param: array $arr_req - the request message in array format
-* @Return: A array object includes attributes to be signed
-*/
 function sign($ussd, $app_key) {  
 
     $result = array();
@@ -54,10 +48,10 @@ function sign($ussd, $app_key) {
 }
 
  /**
-   * @Purpose: Generate signature original string
+   * @Purpose: sorting string
    *
-   * @Param: array $arr_req - the sign message in array format
-   * @Return: the sign source string in 'key1=value1&key2=value2' format
+   * @Param: stringApplet|string
+   * @Return: 
    */
 
 function sortedString($stringApplet){
@@ -74,7 +68,12 @@ function sortedString($stringApplet){
 
     return $stringExplode;
 }
-
+/**
+   * @Purpose: Generate RSA signature of data
+   *
+   * @Param: $data - the sign message in array format
+   * @Return: base64 encoded sign signed with sha256
+   */
 function SignWithRSA($data){
    $rsa = new Crypt_RSA();
 
@@ -96,23 +95,43 @@ function SignWithRSA($data){
 
     return base64_encode($signtureByte);
 }
-
-function trimPrivateKey($stingData){
+/**
+   * @Purpose: To trim the private key 
+   *
+   * @Param: $stringData -> the private key to be trimmed
+   * @Return: array of the return of explode function
+   */
+function trimPrivateKey($stringData){
  
-  return explode("-----", (string)$stingData);
+  return explode("-----", (string)$stringData);
 
 }
-
+/**
+   * @Purpose: Generate unique merchant order id
+   *
+   * @Param: no-Parameter is required.
+   * @Return: String format of the time function.
+   */
 function createMerchantOrderId() {
     return (string)time();
 }
 
+/**
+   * @Purpose: Generate timestamp
+   *
+   * @Param: no-Parameter is required.
+   * @Return: String format of the time function.
+   */
 function createTimeStamp() {
     return (string)time();
-    // //   return (string)round(time());
-    // return (string)strtotime(date('Y-m-d H:i:s'));
 }
-// create a 32 length random string
+
+/**
+   * @Purpose: Generate a 32 length of random string
+   *
+   * @Param: no-Parameter is required.
+   * @Return: A random string with length of 32..
+   */
 function createNonceStr() {
   $chars = [
     "0",
@@ -154,12 +173,9 @@ function createNonceStr() {
   ];
   $str = "";
   for ($i = 0; $i < 32; $i++) {
-    // $index = parseInt(Math.random() * 35);
     $index = intval(rand() * 35);
-    // print_r($index);
     $str .= $chars[$i];
   }
-    //   return "5K8264pLTKCH16CQ2502nI8zNMTM6790";
     return uniqid();
 }
 
