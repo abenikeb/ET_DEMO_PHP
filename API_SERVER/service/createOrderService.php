@@ -11,6 +11,7 @@ class CreateOrderService
     public $appSecret;
     public $merchantAppId;
     public $merchantCode;
+    public $path;
 
     function __construct($baseUrl, $req, $fabricAppId, $appSecret, $merchantAppId, $merchantCode)
     {
@@ -20,6 +21,7 @@ class CreateOrderService
         $this->appSecret = $appSecret;
         $this->merchantAppId = $merchantAppId;
         $this->merchantCode = $merchantCode;
+        $this->path = "http://"  . $_REQUEST['PATH_NAME'];
     }
     /**
      * @Purpose: Creating Order
@@ -32,40 +34,37 @@ class CreateOrderService
         $title = $this->req->title;
         $amount = $this->req->amount;
 
+        print_r("REQ_URL_STRTA");
+        print_r($this->path);
+        print_r("REQ_URL_END");
+
         $applyFabricTokenResult = new ApplyFabricToken(
             $this->BASE_URL,
             $this->fabricAppId,
             $this->appSecret,
             $this->merchantAppId
         );
-        $res = json_decode($applyFabricTokenResult->applyFabricToken());
 
-        $fabricToken = $res->token;
+        $result = json_decode($applyFabricTokenResult->applyFabricToken());
+
+        $fabricToken = $result->token;
 
         $createOrderResult = $this->requestCreateOrder($fabricToken, $title, $amount);
 
         $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
 
-
         $rawRequest = $this->createRawRequest($prepayId);
-    
-        
+
         echo $rawRequest;
-
-        // if($rawRequest) {
-        //     $response = [ 'rawRequest' => $rawRequest];
-        // } else {
-        //     $response = ['status' => 0, 'message' => 'Failed to create record.'];
-        // }
-        // echo json_encode($response);
-
     }
+
     /**
      * @Purpose: Requests CreateOrder
      *
      * @Param: fabricToken|String title|string amount|string
      * @Return: String | Boolean
      */
+
     function requestCreateOrder($fabricToken, $title, $amount)
     {
         $ch = curl_init();
@@ -119,7 +118,6 @@ class CreateOrderService
     {
         $req = array(
             'nonce_str' => createNonceStr(),
-            'nonce_str' => 'A2Y0OMG8E1H8TM5F45WR1V8VY78G6O5U',
             'method' => 'payment.preorder',
             'timestamp' => createTimeStamp(),
             'version' => '1.0',
@@ -127,7 +125,8 @@ class CreateOrderService
         );
 
         $biz = array(
-            'notify_url' => 'https://www.google.com',
+            // 'notify_url' => 'https://www.google.com',
+            'notify_url' => $this->path . '/app/product_list.html',
             'business_type' => 'BuyGoods',
             'trade_type' => 'InApp',
             'appid' => $this->merchantAppId,
@@ -140,14 +139,13 @@ class CreateOrderService
             'payee_identifier' => '220311',
             'payee_identifier_type' => '04',
             'payee_type' => '5000',
-            'redirect_url' => 'https://www.bing.com'
+            'redirect_url' => $this->path . '/app/product_list.html'
         );
 
         $req['biz_content'] = $biz;
-        $req['sign'] = applySHA256Encription($req);
         $req['sign_type'] = 'SHA256WithRSA';
 
-        print_r(json_encode($req));
+        $req['sign'] = sign($req);
 
         return json_encode($req);
     }
@@ -159,18 +157,16 @@ class CreateOrderService
      */
     function createRawRequest($prepayId)
     {
+        $rawRequest = '';
+
         $maps = array(
             "appid" => $this->merchantAppId,
             "merch_code" => $this->merchantCode,
             "nonce_str" => createNonceStr(),
             "prepay_id" => $prepayId,
-            "timestamp" => (string)time()
+            "timestamp" => createTimeStamp()
         );
 
-        $sign = applySHA256Encription($maps);
-
-        $rawRequest = '';
-        // order by ascii in array
         foreach ($maps as $map => $m) {
             if ($rawRequest == '') {
                 $rawRequest = $map . '=' . $m;
@@ -178,16 +174,10 @@ class CreateOrderService
                 $rawRequest = $rawRequest . '&' . $map . '=' . $m;
             }
         }
-
-        $rawRequest = $rawRequest . '&' . 'sign=' . $sign;
-        foreach($maps as $map => $m){
-                if ($rawRequest == '') {     
-                    $rawRequest = $map . '=' . $m;           
-                } else {                
-                    $rawRequest = $rawRequest . '&' . $map . '=' . $m;            
-                }  
-            }      
+        $sign = sign($maps);
+        // order by ascii in array
         $rawRequest = $rawRequest . '&' . 'sign=' . $sign . '&' . 'sign_type=' . "SHA256WithRSA";
+
         return $rawRequest;
     }
 }
