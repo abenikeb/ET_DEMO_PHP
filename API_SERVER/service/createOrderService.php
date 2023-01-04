@@ -44,21 +44,13 @@ class CreateOrderService
 
         $createOrderResult = $this->requestCreateOrder($fabricToken, $title, $amount);
 
-        echo "\n createOrderResult \n";
-        print_r($createOrderResult);
-
-
         $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
 
 
         $rawRequest = $this->createRawRequest($prepayId);
-
-        echo "\n createOrderResult \n";
-        print_r($rawRequest);
-
-
-
-        // echo $rawRequest;
+    
+        
+        echo $rawRequest;
 
         // if($rawRequest) {
         //     $response = [ 'rawRequest' => $rawRequest];
@@ -188,6 +180,14 @@ class CreateOrderService
         }
 
         $rawRequest = $rawRequest . '&' . 'sign=' . $sign;
+        foreach($maps as $map => $m){
+                if ($rawRequest == '') {     
+                    $rawRequest = $map . '=' . $m;           
+                } else {                
+                    $rawRequest = $rawRequest . '&' . $map . '=' . $m;            
+                }  
+            }      
+        $rawRequest = $rawRequest . '&' . 'sign=' . $sign . '&' . 'sign_type=' . "SHA256WithRSA";
         return $rawRequest;
     }
 }
