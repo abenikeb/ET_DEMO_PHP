@@ -11,7 +11,7 @@ class CreateOrderService
     public $appSecret;
     public $merchantAppId;
     public $merchantCode;
-    public $path;
+    public $notify_path;
 
     function __construct($baseUrl, $req, $fabricAppId, $appSecret, $merchantAppId, $merchantCode)
     {
@@ -21,7 +21,7 @@ class CreateOrderService
         $this->appSecret = $appSecret;
         $this->merchantAppId = $merchantAppId;
         $this->merchantCode = $merchantCode;
-        $this->path = "http://"  . $_REQUEST['PATH_NAME'];
+        $this->notify_path = "http://"  . $_SERVER['SERVER_NAME'];
     }
     /**
      * @Purpose: Creating Order
@@ -33,10 +33,6 @@ class CreateOrderService
     {
         $title = $this->req->title;
         $amount = $this->req->amount;
-
-        print_r("REQ_URL_STRTA");
-        print_r($this->path);
-        print_r("REQ_URL_END");
 
         $applyFabricTokenResult = new ApplyFabricToken(
             $this->BASE_URL,
@@ -126,7 +122,7 @@ class CreateOrderService
 
         $biz = array(
             // 'notify_url' => 'https://www.google.com',
-            'notify_url' => $this->path . '/app/product_list.html',
+            'notify_url' => $this->notify_path . '/api/payment.php', // set your notify end point
             'business_type' => 'BuyGoods',
             'trade_type' => 'InApp',
             'appid' => $this->merchantAppId,
@@ -139,7 +135,7 @@ class CreateOrderService
             'payee_identifier' => '220311',
             'payee_identifier_type' => '04',
             'payee_type' => '5000',
-            'redirect_url' => $this->path . '/app/product_list.html'
+            // 'redirect_url' => $this->path . '/app/product_list.html'
         );
 
         $req['biz_content'] = $biz;

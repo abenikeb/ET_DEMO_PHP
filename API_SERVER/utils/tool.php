@@ -17,6 +17,7 @@ function sign($request)
         if (in_array($key, $exclude_fields)) {
             continue;
         }
+
         if ($key == "biz_content") {
             foreach ($values as $value => $single_value) {
                 if ($stringApplet == '') {
