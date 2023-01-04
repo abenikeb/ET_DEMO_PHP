@@ -159,7 +159,6 @@ function createNonceStr() {
     // print_r($index);
     $str .= $chars[$i];
   }
-    //   return "5K8264pLTKCH16CQ2502nI8zNMTM6790";
     return uniqid();
 }
 

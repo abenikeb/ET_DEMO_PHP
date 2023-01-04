@@ -36,21 +36,13 @@ class CreateOrderService{
 
         $createOrderResult = $this->requestCreateOrder($fabricToken, $title, $amount);
 
-        echo "\n createOrderResult \n";
-        print_r($createOrderResult);
-
-        
         $prepayId = json_decode($createOrderResult)->biz_content->prepay_id;
        
         
         $rawRequest = $this->createRawRequest($prepayId);
-
-        echo "\n createOrderResult \n";
-        print_r($rawRequest);
-
+    
         
-        
-        // echo $rawRequest;
+        echo $rawRequest;
 
         // if($rawRequest) {
         //     $response = [ 'rawRequest' => $rawRequest];
@@ -129,8 +121,6 @@ class CreateOrderService{
         $req['sign'] = applySHA256Encription($req);
         $req['sign_type'] = 'SHA256WithRSA';
 
-        print_r(json_encode($req));
-     
       return json_encode($req);
     }  
     
@@ -154,9 +144,8 @@ class CreateOrderService{
                 } else {                
                     $rawRequest = $rawRequest . '&' . $map . '=' . $m;            
                 }  
-            }
-        
-        $rawRequest = $rawRequest . '&' . 'sign=' . $sign;
+            }      
+        $rawRequest = $rawRequest . '&' . 'sign=' . $sign . '&' . 'sign_type=' . "SHA256WithRSA";
         return $rawRequest;
     }
 

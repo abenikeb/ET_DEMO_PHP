@@ -47,10 +47,7 @@
      curl_setopt($ch, CURLOPT_TIMEOUT, 30);
  
      $authToken = curl_exec($ch);
-
-     var_dump($authToken);
-     echo 'Curl error: ' . curl_error($ch);
-
+     
      return $authToken;
    }
 
