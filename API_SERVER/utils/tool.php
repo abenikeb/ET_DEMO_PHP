@@ -2,7 +2,9 @@
 <?php
 
 require_once('vendor/autoload.php');
-
+/**
+ * @use phpseclib\Crypt\RSA version - 1.0
+ */
 use phpseclib\Crypt\RSA;
 
 function sign($request)
