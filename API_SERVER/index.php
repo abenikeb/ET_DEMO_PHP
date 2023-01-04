@@ -6,7 +6,7 @@ require_once('./config/env.php');
 header('content-type:application/json');
 header("Access-Control-Allow-Origin: *");
 header("Access-Control-Allow-Methods: *");
-header("Access-Control-Allow-Methods: PUT, GET, POST");
+header("Access-Control-Allow-Methods: PUT, GET,DELETE, POST");
 header("Access-Control-Allow-Headers: Origin, X-Requested-With, Content-Type, Accept");
 
 $METHOD = $_SERVER['REQUEST_METHOD'];
