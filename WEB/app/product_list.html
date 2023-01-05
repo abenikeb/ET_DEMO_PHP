@@ -49,19 +49,19 @@
       }
 
       function startPay() {
+        window.handleinitDataCallback = function () {
+          window.location.href = window.location.origin;
+        };
         if (!price) {
           return;
         }
-
         let loading = weui.loading("loading", {});
         console.log(baseUrl);
         window
           .fetch(baseUrl + "/create/order", {
             method: "post",
-            mode: "no-cors",
-            headers: {
-              "Content-Type": "application/json",
-            },
+            mode: "cors",
+            headers: { "Content-Type": "application/json" },
             body: JSON.stringify({
               title: "diamond_" + price,
               amount: price + "",
@@ -72,17 +72,16 @@
               if (!rawRequest) {
                 return;
               }
-
               if (!window.consumerapp) {
                 console.log("this page is not open in app");
                 return;
               }
-
               window.consumerapp.evaluate(
                 JSON.stringify({
                   functionName: "js_fun_start_pay",
                   params: {
                     rawRequest: rawRequest,
+                    functionCallBackName: "handleinitDataCallback",
                   },
                 })
               );

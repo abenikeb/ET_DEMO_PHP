@@ -24,7 +24,7 @@ $createOrderService = new CreateOrderService(
 
 switch ($METHOD) {
   case 'POST':
-    if ($PATH == "/create/order") {
+    if ($PATH == "/ET-PHP-Demo/API_SERVER/create/order") {
       $createOrderService->createOrder();
     } else if ($PATH == "/auth/token") {
       applyFabricToken($REQUEST_PARAMS);
